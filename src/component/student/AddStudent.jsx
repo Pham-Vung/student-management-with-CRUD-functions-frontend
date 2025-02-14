@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { SiOutline } from 'react-icons/si';
 import { Link, useNavigate } from 'react-router-dom';
 
 const AddStudent = () => {
@@ -10,6 +11,8 @@ const AddStudent = () => {
         department: ''
     });
 
+    const [errorMessage, setErrorMessage] = useState("");
+
     const handleInputChange = (e) => {
         setStudent({ ...student, [e.target.name]: e.target.value });
     }
@@ -18,13 +21,30 @@ const AddStudent = () => {
 
     const handleSaveStudent = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/students", student);
-        navigate('/view-students');
+        try {
+            const response = await axios.post("http://localhost:8080/students", student);
+            if (response.status === 200) {
+                navigate('/view-students');
+            } else {
+                setErrorMessage("Lỗi không thêm được sinh viên");
+            }
+        } catch (error) {
+            setErrorMessage(error.response.data.error);
+        }
     }
+
+    setTimeout(() => {
+        setErrorMessage("");
+    }, 8000);
 
     return (
         <div className='col-sm-8 py-2 px-5 offset-2 shadow'>
             <h2 className="mt-5">Thêm sinh viên</h2>
+            {errorMessage && (
+                <div className="alert alert-danger fade show">
+                    {errorMessage}
+                </div>
+            )}
             <form onSubmit={e => handleSaveStudent(e)}>
                 <div className='input-group mb-5'>
                     <label htmlFor="lastName" className='input-group-text'>

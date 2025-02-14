@@ -7,20 +7,22 @@ import Home from './Home.jsx';
 import AddStudent from './component/student/AddStudent.jsx';
 import StudentsView from './component/student/StudentsView.jsx';
 import StudentProfile from './component/student/StudentProfile.jsx';
+import EditStudent from './component/student/EditStudent.jsx';
 
 function App() {
   return (
-   <main className='container mt-5'>
-    <Router>
-      <NavBar />
-      <Routes>
-        <Route exact path='/' element={<Home />} />
-        <Route exact path='/view-students' element={<StudentsView />} />
-        <Route exact path='/add-student' element={<AddStudent />} />
-        <Route exact path='/student-profile/:id' element={<StudentProfile />} />
-      </Routes>
-    </Router>
-   </main>
+    <main className='container mt-5'>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/view-students' element={<StudentsView />} />
+          <Route exact path='/add-student' element={<AddStudent />} />
+          <Route exact path='/edit-student/:id' element={<EditStudent />} />
+          <Route exact path='/student-profile/:id' element={<StudentProfile />} />
+        </Routes>
+      </Router>
+    </main>
   )
 }
 
